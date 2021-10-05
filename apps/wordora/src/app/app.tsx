@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Message } from '@ant/api-interfaces';
+import { Ui} from '@ant/ui'
 
 export const App = () => {
   const [m, setMessage] = useState<Message>({ message: '' });
@@ -20,6 +21,7 @@ export const App = () => {
           alt="Nx - Smart, Extensible Build Framework"
         />
       </div>
+      <Ui />
       <div>{m.message}</div>
     </>
   );
