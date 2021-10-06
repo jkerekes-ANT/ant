@@ -1,9 +1,24 @@
-export type ButtonProps = {
-    variant?: "primary" | 'secondary'
-    label?: string
-}
+import { useTheme, useToken } from "@chakra-ui/react";
 
-export const Button:React.FC<ButtonProps> = ({label, variant, children}) => {
-    
-   return  <button style={{backgroundColor: variant==="primary"? 'red': 'green', color: 'white'}}>{label || children}</button>
-}
+export type ButtonProps = {
+  variant?: 'primary' | 'secondary';
+  label?: string;
+};
+
+export const Button: React.FC<ButtonProps> = ({ label, variant, children }) => {
+
+  const [primaryColor, secondaryColor] = useToken('colors', ['brand.900', 'brand.700'])
+
+  // console.log(theme)
+
+  return (
+    <button
+      style={{
+        backgroundColor: variant === 'primary' ? primaryColor : secondaryColor,
+        color: 'white',
+      }}
+    >
+      {label || children}
+    </button>
+  );
+};

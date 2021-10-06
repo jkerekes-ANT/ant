@@ -1,29 +1,42 @@
-import React, { useEffect, useState } from 'react';
-import { Message } from '@ant/api-interfaces';
-import { Ui} from '@ant/ui'
+import { UiThemeProvider } from '@ant/ui';
+import React from 'react';
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { AboutPage } from './about';
+import { PageLayout } from './components';
+import { DashboardPage } from './dashboard';
+import { PlayPage } from './play';
 
 export const App = () => {
-  const [m, setMessage] = useState<Message>({ message: '' });
+  // const [m, setMessage] = useState<Message>({ message: '' });
 
-  useEffect(() => {
-    fetch('/api')
-      .then((r) => r.json())
-      .then(setMessage);
-  }, []);
+  // useEffect(() => {
+  //   fetch('/api')
+  //     .then((r) => r.json())
+  //     .then(setMessage);
+  // }, []);
 
   return (
-    <>
-      <div style={{ textAlign: 'center' }}>
-        <h1>Welcome to wordora!</h1>
-        <img
-          width="450"
-          src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png"
-          alt="Nx - Smart, Extensible Build Framework"
-        />
-      </div>
-      <Ui />
-      <div>{m.message}</div>
-    </>
+    <UiThemeProvider>
+      <Router>
+        <Switch>
+          <Route path="/about">
+            <PageLayout>
+              <AboutPage />
+            </PageLayout>
+          </Route>
+          <Route path="/play">
+            <PageLayout>
+              <PlayPage />
+            </PageLayout>
+          </Route>
+          <Route path="/">
+            <PageLayout>
+              <DashboardPage />
+            </PageLayout>
+          </Route>
+        </Switch>
+      </Router>
+    </UiThemeProvider>
   );
 };
 
