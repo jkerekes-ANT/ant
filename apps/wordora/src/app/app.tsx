@@ -2,6 +2,7 @@ import { UiThemeProvider } from '@ant/ui';
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import { AboutPage } from './about';
+import { AppSettingsProvider } from './AppSettings';
 import { PageLayout } from './components';
 import { DashboardPage } from './dashboard';
 import { PlayPage } from './play';
@@ -17,6 +18,7 @@ export const App = () => {
 
   return (
     <UiThemeProvider>
+      <AppSettingsProvider>
       <Router>
         <Switch>
           <Route path="/about">
@@ -36,6 +38,7 @@ export const App = () => {
           </Route>
         </Switch>
       </Router>
+      </AppSettingsProvider>
     </UiThemeProvider>
   );
 };

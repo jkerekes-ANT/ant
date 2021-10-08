@@ -1,6 +1,27 @@
 import { Center } from '@chakra-ui/layout';
-import React from 'react';
+import {
+  CircularProgress,
+  CircularProgressLabel,
+  HTMLChakraProps,
+} from '@chakra-ui/react';
+import React, { useEffect } from 'react';
+import { useAppSettings } from '../AppSettings';
 
-export const Timer = () => {
-  return <Center>60</Center>;
+type TimerProps = {
+  time: number;
+} & HTMLChakraProps<'div'>;
+
+export const Timer: React.VFC<TimerProps> = ({ time, ...props }) => {
+  const { gameTime } = useAppSettings();
+  const progress = 100 - (time * 100) / gameTime;
+
+  return (
+    <Center {...props}>
+      <CircularProgress value={progress} color="blue.400" size="8rem">
+        <CircularProgressLabel>
+          {time}
+        </CircularProgressLabel>
+      </CircularProgress>
+    </Center>
+  );
 };

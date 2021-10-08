@@ -29,7 +29,6 @@ export const WordInput: React.VFC<WordInputProps> = ({
       setValue('');
     } else {
       if (value !== '') {
-        console.log('set Invalid');
         setInvalid(true);
       }
     }
