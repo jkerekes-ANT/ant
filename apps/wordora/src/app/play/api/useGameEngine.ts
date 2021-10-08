@@ -5,7 +5,7 @@ import {
   useEffect,
   useState,
 } from 'react';
-import { useAppSettings } from '../AppSettings';
+import { useAppSettings } from '../../AppSettings';
 
 export enum GameState {
   isReady,
@@ -24,12 +24,12 @@ const stopTimer = (
   }
 };
 
-export const usePlayGame = () => {
+export const useGameEngine = () => {
   const { gameTime: GAME_TIME } = useAppSettings();
 
   const [state, setState] = useState<GameState>(GameState.isReady);
   const [score, setScore] = useState(0);
-  const [time, setTime] = useState(GAME_TIME);
+  const [time, setTime] = useState<number>(GAME_TIME);
   const [timer, setTimer] = useState<TimerType>();
 
   const isPlaying = state === GameState.isPlaying;

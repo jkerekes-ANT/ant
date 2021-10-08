@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { useEnglishWords } from './useEnglishWords';
+import { useEnglishWords } from '.';
 
 export const useWordGame = () => {
   const minLength = 2;

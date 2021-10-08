@@ -2,16 +2,17 @@ import { Box, Button, Center, HStack, VStack } from '@chakra-ui/react';
 import React from 'react';
 import { PlayArea } from './PlayArea';
 import { Timer } from './Timer';
-import { usePlayGame } from './usePlayGame';
+import { useGameEngine } from './api';
 
 export const PlayPage = () => {
-  const { isReady, isPlaying, isDone, score, onStart, onStop, time } = usePlayGame();
+  const { isReady, isPlaying, isDone, score, onStart, onStop, time } =
+    useGameEngine();
 
   return (
     <VStack spacing="4" align="stretch">
       {isReady && (
         <Center>
-          <Button onClick={onStart}>Start</Button>
+          s<Button onClick={onStart}>Start</Button>
         </Center>
       )}
       {isPlaying && (
@@ -19,7 +20,9 @@ export const PlayPage = () => {
           <HStack align="top" justify="stretch">
             <Timer time={time} flexGrow={1} />
             <Box flexGrow={0}>
-              <Button bg="red.400" onClick={onStop}>Stop</Button>
+              <Button bg="red.400" onClick={onStop}>
+                Stop
+              </Button>
             </Box>
           </HStack>
           <PlayArea />

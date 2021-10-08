@@ -12,6 +12,9 @@ export const useEnglishWords = () => {
     'the',
     'of',
     'on',
+    'up', 
+    'const',
+    'game',
     'off',
   ]);
 

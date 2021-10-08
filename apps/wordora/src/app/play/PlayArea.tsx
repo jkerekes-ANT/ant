@@ -1,5 +1,5 @@
 import { VStack } from '@chakra-ui/react';
-import { useWordGame } from './useWordGame';
+import { useWordGame } from './api';
 import { WordInput } from './WordInput';
 import { WordsEntered } from './WordsEntered';
 import { WordStatistics } from './WordStatistics';
