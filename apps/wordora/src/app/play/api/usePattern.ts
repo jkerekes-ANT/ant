@@ -5,15 +5,8 @@ import { useAppSettings } from '../../AppSettings';
 export const usePattern = (wg: WordoraGame, time: number) => {
   const { gameTime } = useAppSettings();
   const [pattern, setPattern] = useState<string>('');
-  const patternLength: number = useMemo(() => {
-    const progress = ((gameTime- time) * 100) / gameTime;
-    if (progress > 66) {
-      return wg.pattern.length - 2;
-    } else if (progress > 33) {
-      return wg.pattern.length - 1;
-    }
-    return wg.pattern.length;
-  }, [gameTime, time, wg.pattern.length]);
+
+  const patternLength: number = useMemo(() => Math.ceil(time/(gameTime/3)), [gameTime, time])
 
   useEffect(() => {
     setPattern(wg.pattern);
