@@ -5,9 +5,11 @@ import {
   useEffect,
   useState,
 } from 'react';
+import { useEnglishWords } from '.';
 import { useAppSettings } from '../../AppSettings';
 
 export enum GameState {
+  isLoading,
   isReady,
   isPlaying,
   isDone,
@@ -26,30 +28,37 @@ const stopTimer = (
 
 export const useGameEngine = () => {
   const { gameTime: GAME_TIME } = useAppSettings();
+  const { data: gameData } = useEnglishWords();
 
-  const [state, setState] = useState<GameState>(GameState.isReady);
+  const [state, setState] = useState<GameState>(GameState.isLoading);
   const [score, setScore] = useState(0);
   const [time, setTime] = useState<number>(GAME_TIME);
   const [timer, setTimer] = useState<TimerType>();
 
+  useEffect(() => {
+    if (!gameData) {
+      setState(GameState.isLoading)
+    } else {     
+      setState(GameState.isReady)
+    }
+    
+  }, [gameData])
+  
   const isPlaying = state === GameState.isPlaying;
 
   const onStart = useCallback(() => {
-
     setState(GameState.isPlaying);
     setTime(GAME_TIME);
-    
+
     const newTimer = setInterval(() => {
       setTime((currentTime) => --currentTime);
     }, 1000);
-    
+
     setTimer((currentTimer) => {
       stopTimer(currentTimer, setTimer);
       return newTimer;
     });
-
   }, [GAME_TIME]);
-
 
   const onStop = useCallback(() => {
     setState(GameState.isDone);
@@ -70,6 +79,7 @@ export const useGameEngine = () => {
   );
 
   return {
+    isLoading: state === GameState.isLoading,
     isReady: state === GameState.isReady,
     isPlaying,
     isDone: state === GameState.isDone,
@@ -78,5 +88,6 @@ export const useGameEngine = () => {
     time,
     state,
     score,
+    gameData,
   };
 };

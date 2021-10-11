@@ -1,13 +1,14 @@
+import { WordoraGame } from '@ant/api-interfaces';
 import { useMemo, useState } from 'react';
-import { useEnglishWords } from '.';
+import { usePattern } from '.';
 
-export const useWordGame = () => {
+export const useWordGame = (wg: WordoraGame, time: number) => {
   const minLength = 2;
-  const { data: enValidWords } = useEnglishWords();
-
+  const enValidWords = useMemo(() => wg.words.map((w) => w.word), [wg.words]);
   const [words, setWords] = useState<Array<string>>([]);
 
-  const pattern = 'str';
+  const { pattern } = usePattern(wg, time);
+
   const onValidateWord = (word: string) =>
     !words.find((w) => w === word) && !!enValidWords.find((w) => w === word);
   const onNewWord = (w: string) => {

@@ -1,28 +1,31 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
+import { WordoraGame } from '@ant/api-interfaces';
+
+const exResponse: WordoraGame = {
+  pattern: 'str',
+  words: [
+    { word: 'so', frequency: 100 },
+    { word: 'state', frequency: 35 },
+    { word: 'sleep', frequency: 1 },
+    { word: 'string', frequency: 10 },
+    { word: 'street', frequency: 20 },
+  ],
+};
 
 export const useEnglishWords = () => {
-  const [data] = React.useState<Array<string>>([
-    'string',
-    'strict',
-    'street',
-    'state',
-    'steak',
-    'still',
-    'soup',
-    'the',
-    'of',
-    'on',
-    'up', 
-    'const',
-    'game',
-    'off',
-  ]);
+  const [data, setData] = useState<WordoraGame | undefined>();
+  const [error, setError] = useState<string | undefined>();
+
+  useEffect(() => {
+    const timer = setTimeout(() => setData(exResponse), 1000);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, []);
 
   return {
     data,
+    error,
   };
 };
-
-export const getName = (fname: string, lname: string) => `${fname} + ${lname}`;
-
-export const add = (a: number, b: number) => a + b;

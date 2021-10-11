@@ -1,21 +1,32 @@
 import { Box, Button, Center, HStack, VStack } from '@chakra-ui/react';
 import React from 'react';
+import { useGameEngine } from './api';
 import { PlayArea } from './PlayArea';
 import { Timer } from './Timer';
-import { useGameEngine } from './api';
 
 export const PlayPage = () => {
-  const { isReady, isPlaying, isDone, score, onStart, onStop, time } =
-    useGameEngine();
+  const {
+    isLoading,
+    isReady,
+    isPlaying,
+    isDone,
+    score,
+    onStart,
+    onStop,
+    time,
+    gameData,
+  } = useGameEngine();
 
   return (
     <VStack spacing="4" align="stretch">
+      {isLoading && <Box>Loading....</Box>}
       {isReady && (
         <Center>
-          s<Button onClick={onStart}>Start</Button>
+          <Button onClick={onStart}>Start</Button>
         </Center>
       )}
-      {isPlaying && (
+      {/*we know for a fact that when is in playing state we have the data, this is here for typescript*/}
+      {isPlaying && gameData && (
         <>
           <HStack align="top" justify="stretch">
             <Timer time={time} flexGrow={1} />
@@ -25,7 +36,7 @@ export const PlayPage = () => {
               </Button>
             </Box>
           </HStack>
-          <PlayArea />
+          <PlayArea gameData={gameData} time={time} />
         </>
       )}
       {isDone && (
