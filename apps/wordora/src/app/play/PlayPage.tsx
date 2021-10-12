@@ -14,6 +14,7 @@ export const PlayPage = () => {
     onStart,
     onStop,
     time,
+    addPoints,
     gameData,
   } = useGameEngine();
 
@@ -29,6 +30,7 @@ export const PlayPage = () => {
       {isPlaying && gameData && (
         <>
           <HStack align="top" justify="stretch">
+            <Box>{score}</Box>
             <Timer time={time} flexGrow={1} />
             <Box flexGrow={0}>
               <Button bg="red.400" onClick={onStop}>
@@ -36,7 +38,7 @@ export const PlayPage = () => {
               </Button>
             </Box>
           </HStack>
-          <PlayArea gameData={gameData} time={time} />
+          <PlayArea gameData={gameData} time={time} onAddPoints={addPoints} />
         </>
       )}
       {isDone && (

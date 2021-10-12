@@ -7,11 +7,12 @@ import { WordStatistics } from './WordStatistics';
 
 type PlayAreaProps = {
   gameData: WordoraGame,
-  time: number
+  time: number,
+  onAddPoints: (p: number)=> void
 }
 
-export const PlayArea:React.VFC<PlayAreaProps> = ({ gameData, time}) => {
-  const { words, onValidateWord, onNewWord, pattern, stats } = useWordGame(gameData, time);
+export const PlayArea:React.VFC<PlayAreaProps> = ({ gameData, time, onAddPoints}) => {
+  const { words, onValidateWord, onNewWord, pattern, stats } = useWordGame(gameData, time, onAddPoints);
   return (
     <VStack align="stretch">
       <WordInput

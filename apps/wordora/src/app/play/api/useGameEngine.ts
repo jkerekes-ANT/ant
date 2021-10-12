@@ -22,28 +22,17 @@ const stopTimer = (
   if (timer) {
     clearInterval(timer);
     setTimer(undefined);
-    console.log('clear', { timer });
   }
 };
 
 export const useGameEngine = () => {
   const { gameTime: GAME_TIME } = useAppSettings();
-  const { data: gameData } = useEnglishWords();
-
   const [state, setState] = useState<GameState>(GameState.isLoading);
+  const { data: gameData } = useEnglishWords();
   const [score, setScore] = useState(0);
   const [time, setTime] = useState<number>(GAME_TIME);
   const [timer, setTimer] = useState<TimerType>();
 
-  useEffect(() => {
-    if (!gameData) {
-      setState(GameState.isLoading)
-    } else {     
-      setState(GameState.isReady)
-    }
-    
-  }, [gameData])
-  
   const isPlaying = state === GameState.isPlaying;
 
   const onStart = useCallback(() => {
@@ -65,6 +54,18 @@ export const useGameEngine = () => {
     stopTimer(timer, setTimer);
   }, [timer]);
 
+  const addPoints = useCallback((point: number) => {
+    setScore((s) => s + point);
+  }, []);
+
+  useEffect(() => {
+    if (!gameData) {
+      setState(GameState.isLoading);
+    } else if (state === GameState.isLoading) {
+      setState(GameState.isReady);
+    }
+  }, [gameData, state]);
+
   useEffect(() => {
     if (time <= 0) {
       onStop();
@@ -83,6 +84,7 @@ export const useGameEngine = () => {
     isReady: state === GameState.isReady,
     isPlaying,
     isDone: state === GameState.isDone,
+    addPoints,
     onStart,
     onStop,
     time,

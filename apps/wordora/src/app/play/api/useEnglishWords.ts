@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
 import { WordoraGame } from '@ant/api-interfaces';
+import { useState, useEffect } from 'react';
 
 const exResponse: WordoraGame = {
   pattern: 'str',
@@ -29,3 +29,11 @@ export const useEnglishWords = () => {
     error,
   };
 };
+
+// const fetcher = (...args: any[]) => fetch(...args).then(res => res.json())
+// export const useEnglishWords = () => {
+//   const {data, error} =useSWR<WordoraGame>('/api/wordora/' , {revalidateOnFocus: false} );
+//   return  {
+//     data, error
+//   }
+// }
