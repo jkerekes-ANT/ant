@@ -1,9 +1,12 @@
 import * as express from 'express';
 import { Message } from '@ant/api-interfaces';
+import { router } from './routes';
 
 const app = express();
 
 const greeting: Message = { message: 'Welcome to api!' };
+
+app.use('/api', router);
 
 app.get('/api', (req, res) => {
   res.send(greeting);
